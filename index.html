@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Твой Займ - Сравните лучшие займы онлайн</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #0072ff;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .loan-calculator, .loan-listings {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin: 15px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #0072ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .provider {
+      border-bottom: 1px solid #ddd;
+      padding: 1rem 0;
+    }
+
+    .provider:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Твой Займ</h1>
+    <p>Найди лучший займ онлайн за 2 минуты</p>
+  </header>
+
+  <section class="loan-calculator">
+    <h2>Калькулятор займа</h2>
+    <label>Сумма:
+      <input type="range" id="amount" min="1000" max="100000" step="1000" value="10000">
+      <span id="amountDisplay">10000 ₽</span>
+    </label>
+    <label>Срок:
+      <input type="range" id="term" min="5" max="30" step="1" value="15">
+      <span id="termDisplay">15 дней</span>
+    </label>
+    <button onclick="calculate()">Найти займ</button>
+  </section>
+
+  <section id="results" class="loan-listings"></section>
+
+  <script>
+    const amount = document.getElementById('amount');
+    const term = document.getElementById('term');
+    const amountDisplay = document.getElementById('amountDisplay');
+    const termDisplay = document.getElementById('termDisplay');
+    const results = document.getElementById('results');
+
+    amount.oninput = () => amountDisplay.textContent = `${amount.value} ₽`;
+    term.oninput = () => termDisplay.textContent = `${term.value} дней`;
+
+    function calculate() {
+      const a = amount.value;
+      const t = term.value;
+      const interest = a * 0.01 * t;
+      const total = +a + interest;
+
+      results.innerHTML = `
+        <h2>Предложения по займам</h2>
+        <div class="provider">
+          <h3>Быстрые Деньги</h3>
+          <p>Сумма займа: ${a} ₽</p>
+          <p>Срок: ${t} дней</p>
+          <p>Итого к возврату: ${total.toFixed(2)} ₽</p>
+        </div>
+        <div class="provider">
+          <h3>Займер</h3>
+          <p>Сумма займа: ${a} ₽</p>
+          <p>Срок: ${t} дней</p>
+          <p>Итого к возврату: ${(total * 1.02).toFixed(2)} ₽ (включая комиссию)</p>
+        </div>
+        <div class="provider">
+          <h3>Манимен</h3>
+          <p>Сумма займа: ${a} ₽</p>
+          <p>Срок: ${t} дней</p>
+          <p>Итого к возврату: ${(total * 0.98).toFixed(2)} ₽ (со скидкой)</p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
